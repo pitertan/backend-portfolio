@@ -1,6 +1,22 @@
 require('dotenv').config();
+const express = require('express');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
+const app = express();
+
+// CORS Configuration
+const corsOptions = {
+    origin: 'https://pitertan.github.io/portfolio-tailwind-CSS/', // Ganti dengan domain frontend Anda
+    methods: ['GET', 'POST'],
+};
+app.use(cors(corsOptions));  // Menambahkan middleware CORS sebelum route
+
+// Middleware
+app.use(bodyParser.json());
+
+// Nodemailer Transporter
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -11,6 +27,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+// Endpoint untuk mengirim email
 module.exports = async (req, res) => {
     if (req.method === 'POST') {
         const { name, email, message } = req.body;
