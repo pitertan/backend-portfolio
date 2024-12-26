@@ -35,9 +35,14 @@ app.post('/send', async (req, res) => {
             to: process.env.TARGET_EMAIL, // Penerima
             subject: `Pesan Baru dari ${name}`, // Subjek
             text: message, // Pesan teks biasa
-            html: `<p><strong>Nama:</strong> ${name}</p>
-                   <p><strong>Email:</strong> ${email}</p>
-                   <p><strong>Pesan:</strong><br>${message}</p>`, // Pesan HTML
+            html: 
+                `<div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                <h2 style="color: #4CAF50;">Pesan Baru</h2>
+                <p style="margin: 0 0 10px;"><strong>Nama:</strong> ${name}</p>
+                <p style="margin: 0 0 10px;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #4CAF50; text-decoration: none;">${email}</a></p>
+                <p style="margin: 0 0 10px;"><strong>Pesan:</strong></p>
+                <div style="background-color: #fff; padding: 15px; border: 1px solid #ddd; border-radius: 8px; color: #555;">${message}</div>
+                <footer style="margin-top: 20px; font-size: 12px; color: #aaa;"><p>Pesan ini dikirim melalui aplikasi kontak Anda.</p></footer></div>`, // Pesan HTML
         });
 
         res.status(200).json({ message: 'Pesan berhasil dikirim!' });
